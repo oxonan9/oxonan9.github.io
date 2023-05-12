@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="oxonan" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      SpringCloud 
+      
+      
+      |
+    
+     oxonan
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="">
+    <link rel="icon" href="">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Nan</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/links/">
+          <a href="/links/">Links</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">SpringCloud</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2021-03-20 00:00:00
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="Tags"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E9%87%8D%E5%AD%A6Spring/" title="重学Spring">
+                    <b>#</b> 重学Spring
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="微服务相关概念"><a href="#微服务相关概念" class="headerlink" title="微服务相关概念"></a>微服务相关概念</h1><ol>
+<li><p>微服务 是分布式架构最佳的实践方案，将单体应用拆分成若干个服务，基于服务进行开发和部署。</p>
+</li>
+<li><p>SpringCloud 是微服务框架，集成了各种微服务的功能组件，比如Eureka、Nacos、Fegin、Dubbo等等，同时SpringCloud还是基于SpringBoot的，实现了这些组件的自动装配，可以开箱即用。</p>
+<ul>
+<li>Dubbo是一款RPC框架，它的核心在于服务的远程调用，是不提供注册中心、配置中心、网关等组件的。</li>
+</ul>
+</li>
+</ol>
+<p>微服务开发规范：</p>
+<ul>
+<li>服务的单一职责</li>
+<li>每个服务有独立的数据库，从物理上隔离</li>
+<li>服务对外暴露接口，供其他服务调用</li>
+</ul>
+<h2 id="架构的演变"><a href="#架构的演变" class="headerlink" title="架构的演变"></a>架构的演变</h2><p>单体架构：以项目为单元进行开发部署，优点：架构简单，部署方便。缺点代码耦合性高、依赖关系复杂、项目太大编译时间过长。</p>
+<p>分布式架构：以模块为单元进行开发部署，一个业务就是一个模块&#x2F;服务。优点；耦合性降低，缺点：架构相对复杂，服务的治理问题</p>
+<p>我感觉这种模块更好一点吧，如果让网关直接路由到底层服务，那客户端岂不是要调用很多个接口来实现聚合？</p>
+<p>是的，网关直接路由到底层服务的实现方式通常被称为”普通网关模式”，它通常需要客户端调用多个API端点来收集所需的数据，这可能会导致较大的网络延迟和性能瓶颈，并对前端应用程序的开发和维护造成一定的负担。相比之下，使用BFF模式将前端应用程序和后端微服务之间引入了一个专用的中间层，可以减轻客户端的工作负担，并简化了前端应用程序的开发和维护。</p>
+<p>在你的具体实现中，将不同的功能模块（例如用户、商家和管理）分别作为不同的BFF层，非常符合BFF模式的一般实现方式。这种实现方式可以为前端应用程序提供精细化的功能模块，同时避免了前端应用程序直接依赖后端微服务的设计缺陷。</p>
+<p>需要注意的是，这种设计模式并不是适用于所有业务场景。在一些需要处理大量重复逻辑的简单系统中，使用BFF模式可能会增加不必要的复杂度。但是，在一些需要在前端应用程序和后端微服务之间建立复杂的数据交互和数据协同关系的较大规模系统中，BFF模式可能会是一种更好的设计模式选择。</p>
+<p>Gateway网关的作用并不只是简单地路由请求到后端服务，它还可以提供负载均衡、安全认证、限流控制、请求转换等功能。此外，使用Gateway网关还可以将所有的API流量集中到一个入口，方便进行监控和管理。</p>
+<p>因此，即使使用了BFF模式，Gateway网关仍然是一个有用的组件，可以提供一些额外的功能和保证API的稳定性。此外，Gateway网关可以将微服务和BFF层之间进行解耦，使得后端服务可以更加灵活地进行管理和部署。</p>
+<p>当然，在具体的实现中，还需要根据具体的业务需求和技术架构来选择是否使用Gateway网关。如果整个系统较为简单或者实现时需要节省成本，也可以考虑直接让前端应用程序调用BFF层。</p>
+<h1 id="注册中心-Nacos"><a href="#注册中心-Nacos" class="headerlink" title="注册中心-Nacos"></a>注册中心-Nacos</h1><blockquote>
+<p>为什么需要注册中心？</p>
+<p>如果没有服务注册中心，那么服务地址就要硬编码，一是地址不好维护，二是集群无法扩展，以及无法感知健康状态等等。而注册中心相当于一个中间件，维护了服务的地址和健康状态，服务调用都先经过服务注册中心。</p>
+</blockquote>
+<p>Nacos是Alibaba开源的服务管理和配置管理平台，提供服务的注册发现和服务的动态配置。同类替代品还有Eureka + consul。</p>
+<p><a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/quick-start.html">官方文档</a>｜<a target="_blank" rel="noopener" href="https://github.com/alibaba/nacos/releases">下载地址</a></p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>conf&#x2F;application.properties</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//控制台URI路径</span></span><br><span class="line">server.<span class="property">servlet</span>.<span class="property">contextPath</span>=/nacos </span><br><span class="line"><span class="comment">//端口号</span></span><br><span class="line">server.<span class="property">port</span>=<span class="number">8848</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//数据库持久化，nacos有内嵌的数据库，但一般都会配置外部的数据库</span></span><br><span class="line"><span class="comment">//如果配置后启动日志报错`No Database set`，检查数据库的配置是否有误</span></span><br><span class="line">#*************** <span class="title class_">Config</span> <span class="title class_">Module</span> <span class="title class_">Related</span> <span class="title class_">Configurations</span> ***************#</span><br><span class="line">### <span class="title class_">If</span> use <span class="title class_">MySQL</span> <span class="keyword">as</span> datas <span class="attr">ource</span>:</span><br><span class="line"># spring.<span class="property">datasource</span>.<span class="property">platform</span>=mysql</span><br><span class="line"></span><br><span class="line">### <span class="title class_">Count</span> <span class="keyword">of</span> <span class="attr">DB</span>:</span><br><span class="line"># db.<span class="property">num</span>=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">### <span class="title class_">Connect</span> <span class="variable constant_">URL</span> <span class="keyword">of</span> <span class="attr">DB</span>:</span><br><span class="line"># db.<span class="property">url</span><span class="number">.0</span>=<span class="attr">jdbc</span>:<span class="attr">mysql</span>:<span class="comment">//127.0.0.1:3306/nacos_config?characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=UTC</span></span><br><span class="line"># db.<span class="property">user</span><span class="number">.0</span>=数据库用户名</span><br><span class="line"># db.<span class="property">password</span><span class="number">.0</span>=数据库密码</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果要配置外部的数据库，首先要创建一个数据库，以及创建naocs相关的表，导入conf&#x2F;nacos-mysql.sql即可</p>
+</blockquote>
+<h3 id="Nacos权限验证"><a href="#Nacos权限验证" class="headerlink" title="Nacos权限验证"></a>Nacos权限验证</h3><p>Nacos权限漏洞问题 在 &lt; 2.0的版本中</p>
+<p>通过<code>GET http://localhost:2478/nacos/v1/auth/users/?pageNo=1&amp;pageSize=9</code> 可以访问用户列表</p>
+<p>通过<code>POST  http://127.0.0.1:2478/nacos/v1/auth/users?username=test1&amp;password=test</code> 可以添加用户</p>
+<p><a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/blog/announcement-token-secret-key.html">https://nacos.io/zh-cn/blog/announcement-token-secret-key.html</a></p>
+<p>解决办法：</p>
+<ol>
+<li><p>修改配置文件 </p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">nacos.core.auth.enabled</span>=<span class="string">true #设置为true</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 下面这三个不要使用默认值，也有漏洞，随机就好</span></span><br><span class="line"><span class="attr">nacos.core.auth.server.identity.key</span>=<span class="string">serverIdentity #随机字符串</span></span><br><span class="line"><span class="attr">nacos.core.auth.server.identity.value</span>=<span class="string">security #随机字符串</span></span><br><span class="line"><span class="attr">nacos.core.auth.plugin.nacos.token.secret.key</span>=<span class="string">SecretKey01234567890123456789012345678901234567890123456789012345678 #自定义密钥时，推荐将配置项设置为Base64编码的字符串，且原始密钥长度不得低于32字符</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开启权限认证后项目中要设置username和password</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">user-service</span> <span class="comment">#这个name是服务的名称，也叫做serviceId，一定要配置</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">username:</span> <span class="string">nacos</span></span><br><span class="line">        <span class="attr">password:</span> <span class="string">nacos</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>在 &gt;2.0 的版本中，默认是不需要授权的，必须要将nacos.core.auth.enabled设置为true，而且不要使用官方的默认值！！</p>
+<h2 id="单机启动"><a href="#单机启动" class="headerlink" title="单机启动"></a>单机启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> nacos/bin</span><br><span class="line"><span class="comment">#单机启动</span></span><br><span class="line">sh startup.sh -m standalone </span><br><span class="line"><span class="comment">#集群启动</span></span><br><span class="line">sh startip.sh</span><br><span class="line"><span class="comment">#停止</span></span><br><span class="line">sh shutdown.sh</span><br></pre></td></tr></table></figure>
+
+<p>启动成功，访问Web控制台: <a target="_blank" rel="noopener" href="http://localhost:8848/nacos%EF%BC%8C%E9%BB%98%E8%AE%A4%E7%94%A8%E6%88%B7%E5%90%8D%E5%AF%86%E7%A0%81">http://localhost:8848/nacos，默认用户名密码</a>: nacos&#x2F;nacos</p>
+<h2 id="集群启动"><a href="#集群启动" class="headerlink" title="集群启动"></a>集群启动</h2><p>集群的作用就是防止单节点挂掉无法提供服务，配置很简单：</p>
+<ol>
+<li><p>首先使用集群就必须配置数据库持久化</p>
+</li>
+<li><p>准备多台服务器，在每个服务器的nacos的conf目录下配置cluster.conf</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//每个服务器的ip以及nacos端口</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.109</span>:<span class="number">8848</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.119</span>:<span class="number">8858</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.129</span>:<span class="number">8868</span></span><br></pre></td></tr></table></figure>
+
+<p>当然也可以在一台服务器下启动多个nacos，根据端口做集群配置</p>
+</li>
+<li><p>启动nacos命令：<code>sh startup.sh</code>，注意没有 -m standalone</p>
+</li>
+</ol>
+<h2 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h2><p>nacos的命名空间的作用是<code>项目隔离</code>，一个nacos服务可以配置多个项目，一个项目即对应一个命名空间。(当然也可以每个项目都配置一个nacos，视情况而定)。</p>
+<p>使用：在控制台创建命名空间后会给一个命名空间id，在项目中配置namespace属性即可</p>
+<h2 id="整合SpringBoot"><a href="#整合SpringBoot" class="headerlink" title="整合SpringBoot"></a>整合SpringBoot</h2><ol>
+<li><p>引入依赖</p>
+<p>父工程：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- alibaba下依赖的版本号管理，放在dependencyManagement子工程才会继承 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-alibaba-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span> <span class="comment">&lt;!-- 注意这里的type是pom，它不是jar包 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>子工程：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- spring cloud alibaba nacos discovery 依赖 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 引入 Web 功能 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动类配置注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//开启服务发现，这个注解只代表其他的服务可以调用它。不加该注解也会成功注册的</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NacosClientApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(NacosClientApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置文件</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下是nacos的配置</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">ecommerce-nacos-client</span> <span class="comment">#这个name是服务的名称，也叫做serviceId，一定要配置</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="literal">true</span> <span class="comment"># 使用nacos</span></span><br><span class="line">        <span class="attr">server-addr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8848</span> <span class="comment">#nacos地址</span></span><br><span class="line">        <span class="comment">#   server-addr: 127.0.0.1:8848,127.0.0.1:8858,127.0.0.1:8868 # 集群地址配置</span></span><br><span class="line">        <span class="attr">namespace:</span> <span class="string">e2302326-7a3d-40e9-bc8c-2de52f4073a6</span> <span class="comment"># 命名空间</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试一下</p>
+<p>可以先去控制台服务列表看一下是否注册成功，然后用代码写个接口来获取一下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NacosClientService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//这是SpringCloud提供的接口</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DiscoveryClient discoveryClient;</span><br><span class="line">		</span><br><span class="line">  	<span class="comment">//传入上面定义的spring.application.name</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;ServiceInstance&gt; <span class="title function_">getInstances</span><span class="params">(String serviceId)</span> &#123;</span><br><span class="line">        log.info(<span class="string">&quot;获取服务实例，serviceId: [&#123;&#125;]&quot;</span>, serviceId);</span><br><span class="line">        List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(serviceId);</span><br><span class="line">        <span class="keyword">return</span> instances;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NacosClientController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> NacosClientService nacosClientService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取服务实例</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> serviceId 服务名称 spring.application.name</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;service-instance&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;ServiceInstance&gt; <span class="title function_">getServiceInstances</span><span class="params">(String serviceId)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> nacosClientService.getInstances(serviceId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="版本问题"><a href="#版本问题" class="headerlink" title="版本问题"></a>版本问题</h3><p>com.alibaba.nacos.api.exception.NacosException: Request nacos server failed: </p>
+<p><code>2.x的服务端可以兼容1.x的客户端，但是1.x的服务端不能兼容2.x的客户端。</code></p>
+<p>解决办法: </p>
+<ol>
+<li><p>修改服务端版本</p>
+</li>
+<li><p>修改客户端版本</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.nacos<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>nacos-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.nacos<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>nacos-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2021-03-20 00:00:00
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="Tags"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E9%87%8D%E5%AD%A6Spring/" title="重学Spring">
+                        <b>#</b> 重学Spring
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-text">微服务相关概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E7%9A%84%E6%BC%94%E5%8F%98"><span class="toc-text">架构的演变</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83-Nacos"><span class="toc-text">注册中心-Nacos</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Nacos%E6%9D%83%E9%99%90%E9%AA%8C%E8%AF%81"><span class="toc-text">Nacos权限验证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="toc-text">单机启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E5%90%AF%E5%8A%A8"><span class="toc-text">集群启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-text">命名空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E5%90%88SpringBoot"><span class="toc-text">整合SpringBoot</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="toc-text">版本问题</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/oxonan9">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Powered by Hexo & Oranges</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>
