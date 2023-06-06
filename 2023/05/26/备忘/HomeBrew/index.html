@@ -11,11 +11,6 @@
   
   <title>
     
-      Archives 
-      
-      
-      |
-    
      oxonan
   </title>
 
@@ -105,201 +100,89 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
 
-<div class="container archives">
-  <div class="post-list">
-    
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2023</span>
-          </h2>
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title"></div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2023-05-26 15:15:45
+        </span>
+        
+      </div>
+      <div class="markdown-body">
+        
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/05/24/BH/Jackson%E5%BA%8F%E5%88%97%E5%8C%96%E9%85%8D%E7%BD%AE/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2023-05-26 15:15:45
+            </span>
+            
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/05/26/index/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
         </div>
       
-      <div class="post-item" title="">
-        <div class="time-m-d">06-06</div>
-        <div class="title">
-          <a href="/2023/06/06/%E5%A4%87%E5%BF%98/Mybatis%20for%E6%9F%A5%E8%AF%A2/">
-            <span></span>
-          </a>
-        </div>
-      </div>
+    </div>
     
-      <div class="post-item" title="">
-        <div class="time-m-d">06-05</div>
-        <div class="title">
-          <a href="/2023/06/05/%E5%A4%87%E5%BF%98/curl%20443/">
-            <span></span>
-          </a>
-        </div>
-      </div>
+
     
-      <div class="post-item" title="">
-        <div class="time-m-d">06-05</div>
-        <div class="title">
-          <a href="/2023/06/05/%07%EF%BF%BD/CPU100%25%20%EF%BF%BD%0B%EF%BF%BD%0B/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">06-04</div>
-        <div class="title">
-          <a href="/2023/06/04/inter/Basic/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">06-01</div>
-        <div class="title">
-          <a href="/2023/06/01/Untitled/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-26</div>
-        <div class="title">
-          <a href="/2023/05/26/%E5%8A%A8%E6%80%81%E7%99%BD%E5%90%8D%E5%8D%95/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-26</div>
-        <div class="title">
-          <a href="/2023/05/26/SpringSecurity/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-26</div>
-        <div class="title">
-          <a href="/2023/05/26/index/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-26</div>
-        <div class="title">
-          <a href="/2023/05/26/%E5%A4%87%E5%BF%98/HomeBrew/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-24</div>
-        <div class="title">
-          <a href="/2023/05/24/BH/Jackson%E5%BA%8F%E5%88%97%E5%8C%96%E9%85%8D%E7%BD%AE/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-22</div>
-        <div class="title">
-          <a href="/2023/05/22/BH/%E5%85%A8%E5%B1%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-21</div>
-        <div class="title">
-          <a href="/2023/05/21/BH/%E6%95%B4%E5%90%88redis/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-21</div>
-        <div class="title">
-          <a href="/2023/05/21/BH/%E5%BC%80%E5%8F%91%E5%87%86%E5%88%99/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-21</div>
-        <div class="title">
-          <a href="/2023/05/21/BH/%E6%B3%A8%E8%A7%A3/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-21</div>
-        <div class="title">
-          <a href="/2023/05/21/BH/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%88%86%E7%BB%84%E6%A0%A1%E9%AA%8C/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-19</div>
-        <div class="title">
-          <a href="/2023/05/19/%E5%A4%87%E5%BF%98/%E6%9F%A5%E7%9C%8B%E5%AE%89%E8%A3%85%E7%9A%84JDK%E7%9B%AE%E5%BD%95/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">04-25</div>
-        <div class="title">
-          <a href="/2023/04/25/%E5%A4%87%E5%BF%98/%E5%88%B7%E6%96%B0DNS%E7%BC%93%E5%AD%98/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2021</span>
-          </h2>
-        </div>
-      
-      <div class="post-item" title="SpringCloud">
-        <div class="time-m-d">03-20</div>
-        <div class="title">
-          <a href="/2021/03/20/%E5%BE%AE%E6%9C%8D%E5%8A%A1/index/">
-            <span>SpringCloud</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="下载dump">
-        <div class="time-m-d">03-20</div>
-        <div class="title">
-          <a href="/2021/03/20/%E5%A4%87%E5%BF%98/%E4%B8%8B%E8%BD%BDdump/">
-            <span>下载dump</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         
 <div class="footer">

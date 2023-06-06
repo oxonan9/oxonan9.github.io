@@ -11,11 +11,6 @@
   
   <title>
     
-      Archives 
-      
-      
-      |
-    
      oxonan
   </title>
 
@@ -105,201 +100,122 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
 
-<div class="container archives">
-  <div class="post-list">
-    
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2023</span>
-          </h2>
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title"></div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2023-05-21 19:39:38
+        </span>
+        
+      </div>
+      <div class="markdown-body">
+        <h3 id="集成Redis"><a href="#集成Redis" class="headerlink" title="集成Redis"></a>集成Redis</h3><ol>
+<li>依赖</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--连接池要配置--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.commons<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-pool2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置</li>
+</ol>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">6379</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">123456</span></span><br><span class="line">    <span class="attr">database:</span> <span class="number">0</span></span><br><span class="line">    <span class="attr">lettuce:</span></span><br><span class="line">      <span class="attr">pool:</span> <span class="comment"># 连接池</span></span><br><span class="line">        <span class="attr">max-idle:</span> <span class="number">16</span></span><br><span class="line">        <span class="attr">max-active:</span> <span class="number">32</span></span><br><span class="line">        <span class="attr">min-idle:</span> <span class="number">8</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="修改序列化"><a href="#修改序列化" class="headerlink" title="修改序列化"></a>修改序列化</h3><p>默认使用的JDK序列化，乱码，修改序列化重新注入。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RedisConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> RedisTemplate <span class="title function_">redisTemplate</span><span class="params">(RedisTemplate&lt;String, String&gt; redisTemplate)</span> &#123;</span><br><span class="line">        <span class="type">Jackson2JsonRedisSerializer</span> <span class="variable">jackson2JsonRedisSerializer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Jackson2JsonRedisSerializer</span>(Object.class);</span><br><span class="line">        <span class="type">ObjectMapper</span> <span class="variable">om</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>();</span><br><span class="line">        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);</span><br><span class="line">        om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance ,</span><br><span class="line">                ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);</span><br><span class="line">        jackson2JsonRedisSerializer.setObjectMapper(om);</span><br><span class="line">        RedisSerializer&lt;String&gt; redisSerializer = <span class="keyword">new</span> <span class="title class_">StringRedisSerializer</span>();</span><br><span class="line">        <span class="comment">// key的序列化类型</span></span><br><span class="line">        redisTemplate.setKeySerializer(redisSerializer);</span><br><span class="line">        redisTemplate.setHashKeySerializer(redisSerializer);</span><br><span class="line">        <span class="comment">// value的序列化类型</span></span><br><span class="line">        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);</span><br><span class="line">        redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);</span><br><span class="line">        <span class="keyword">return</span> redisTemplate;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>&#x2F;&#x2F;</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/05/21/BH/%E5%BC%80%E5%8F%91%E5%87%86%E5%88%99/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2023-05-21 19:39:38
+            </span>
+            
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/05/22/BH/%E5%85%A8%E5%B1%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
         </div>
       
-      <div class="post-item" title="">
-        <div class="time-m-d">06-06</div>
-        <div class="title">
-          <a href="/2023/06/06/%E5%A4%87%E5%BF%98/Mybatis%20for%E6%9F%A5%E8%AF%A2/">
-            <span></span>
-          </a>
-        </div>
-      </div>
+    </div>
     
-      <div class="post-item" title="">
-        <div class="time-m-d">06-05</div>
-        <div class="title">
-          <a href="/2023/06/05/%E5%A4%87%E5%BF%98/curl%20443/">
-            <span></span>
-          </a>
-        </div>
-      </div>
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E6%88%90Redis"><span class="toc-text">集成Redis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-text">修改序列化</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      <div class="post-item" title="">
-        <div class="time-m-d">06-05</div>
-        <div class="title">
-          <a href="/2023/06/05/%07%EF%BF%BD/CPU100%25%20%EF%BF%BD%0B%EF%BF%BD%0B/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">06-04</div>
-        <div class="title">
-          <a href="/2023/06/04/inter/Basic/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">06-01</div>
-        <div class="title">
-          <a href="/2023/06/01/Untitled/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-26</div>
-        <div class="title">
-          <a href="/2023/05/26/%E5%8A%A8%E6%80%81%E7%99%BD%E5%90%8D%E5%8D%95/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-26</div>
-        <div class="title">
-          <a href="/2023/05/26/SpringSecurity/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-26</div>
-        <div class="title">
-          <a href="/2023/05/26/index/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-26</div>
-        <div class="title">
-          <a href="/2023/05/26/%E5%A4%87%E5%BF%98/HomeBrew/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-24</div>
-        <div class="title">
-          <a href="/2023/05/24/BH/Jackson%E5%BA%8F%E5%88%97%E5%8C%96%E9%85%8D%E7%BD%AE/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-22</div>
-        <div class="title">
-          <a href="/2023/05/22/BH/%E5%85%A8%E5%B1%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-21</div>
-        <div class="title">
-          <a href="/2023/05/21/BH/%E6%95%B4%E5%90%88redis/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-21</div>
-        <div class="title">
-          <a href="/2023/05/21/BH/%E5%BC%80%E5%8F%91%E5%87%86%E5%88%99/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-21</div>
-        <div class="title">
-          <a href="/2023/05/21/BH/%E6%B3%A8%E8%A7%A3/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-21</div>
-        <div class="title">
-          <a href="/2023/05/21/BH/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%88%86%E7%BB%84%E6%A0%A1%E9%AA%8C/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">05-19</div>
-        <div class="title">
-          <a href="/2023/05/19/%E5%A4%87%E5%BF%98/%E6%9F%A5%E7%9C%8B%E5%AE%89%E8%A3%85%E7%9A%84JDK%E7%9B%AE%E5%BD%95/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="">
-        <div class="time-m-d">04-25</div>
-        <div class="title">
-          <a href="/2023/04/25/%E5%A4%87%E5%BF%98/%E5%88%B7%E6%96%B0DNS%E7%BC%93%E5%AD%98/">
-            <span></span>
-          </a>
-        </div>
-      </div>
-    
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2021</span>
-          </h2>
-        </div>
-      
-      <div class="post-item" title="SpringCloud">
-        <div class="time-m-d">03-20</div>
-        <div class="title">
-          <a href="/2021/03/20/%E5%BE%AE%E6%9C%8D%E5%8A%A1/index/">
-            <span>SpringCloud</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="下载dump">
-        <div class="time-m-d">03-20</div>
-        <div class="title">
-          <a href="/2021/03/20/%E5%A4%87%E5%BF%98/%E4%B8%8B%E8%BD%BDdump/">
-            <span>下载dump</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         
 <div class="footer">
